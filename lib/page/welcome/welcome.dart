@@ -90,7 +90,7 @@ class WelcomeState extends State<Welcome> {
     return Container(
       width: setWidth(295),
       height: setHeight(44),
-      margin: EdgeInsets.only(top: setHeight(20)),
+      margin: EdgeInsets.only(bottom: setHeight(20)),
       child: FlatButton(
         color: AppColors.primaryElement,
         textColor: AppColors.primaryElementText,
@@ -100,7 +100,12 @@ class WelcomeState extends State<Welcome> {
         shape: RoundedRectangleBorder(
           borderRadius: Radii.k6pxRdius,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            "/sign-in",
+          );
+        },
       ),
     );
   }
@@ -121,6 +126,7 @@ class WelcomeState extends State<Welcome> {
               'Sector news never shares your personal data with advertisers or publishers'),
           _buildPageFeatureItem('feature-3', 40,
               'You can get Premium to unlock hundreds of publications'),
+          Spacer(),
           _buildStartButton(),
         ],
       ),
