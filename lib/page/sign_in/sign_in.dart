@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:newsflutter/common/api/user.dart';
+import 'package:newsflutter/common/entity/entity.dart';
 import 'package:newsflutter/common/utils/utils.dart';
 import 'package:newsflutter/common/values/colors.dart';
 import 'package:newsflutter/common/values/values.dart';
 import 'package:newsflutter/common/widgets/widgets.dart';
+import 'package:newsflutter/global.dart';
 
 /// 创建时间：2020/8/1
 /// 作者：zhangjie
@@ -17,7 +20,7 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  _handleSignIn() {
+  _handleSignIn() async {
     if (!Validator.isEmail(_emailController.value.text)) {
       toastInfo(msg: "邮箱格式错误");
       return;
@@ -27,6 +30,15 @@ class _SignInPageState extends State<SignInPage> {
       toastInfo(msg: "密码长度不能少于6位");
       return;
     }
+
+    UserRequestEntity params = UserRequestEntity(
+      email: _emailController.value.text,
+      password: _passwordController.value.text,
+    );
+
+    UserResponseEntity response =
+        await UserApi.login(params: params, context: context);
+    Global.saveProfile(response);
   }
 
   _handleSignUp() {
@@ -186,22 +198,13 @@ class _SignInPageState extends State<SignInPage> {
             child: Row(
               children: [
                 flatButtonBorderOnlyWidget(
-                  onPressed: () {},
-                  iconFileName: "twitter",
-                  width: 88
-                ),
+                    onPressed: () {}, iconFileName: "twitter", width: 88),
                 Spacer(),
                 flatButtonBorderOnlyWidget(
-                    onPressed: () {},
-                    iconFileName: "google",
-                    width: 88
-                ),
+                    onPressed: () {}, iconFileName: "google", width: 88),
                 Spacer(),
                 flatButtonBorderOnlyWidget(
-                    onPressed: () {},
-                    iconFileName: "facebook",
-                    width: 88
-                ),
+                    onPressed: () {}, iconFileName: "facebook", width: 88),
               ],
             ),
           )

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:newsflutter/global.dart';
 import 'package:newsflutter/page/welcome/welcome.dart';
 import 'package:newsflutter/routes.dart';
 
 void main() {
-  runApp(MyApp());
+  Global.init().then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
