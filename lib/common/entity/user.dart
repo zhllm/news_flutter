@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 
 class UserRequestEntity {
-  final String email;
-  final String password;
+  final String account;
+  final String secret;
 
   UserRequestEntity({
-    @required this.email,
-    @required this.password,
+    @required this.account,
+    @required this.secret,
   });
 
   factory UserRequestEntity.fromJson(Map<String, dynamic> json) =>
       UserRequestEntity(
-        email: json['email'],
-        password: json['password'],
+        account: json['account'],
+        secret: json['secret'],
       );
 
   Map<String, dynamic> toJson() => ({
-        "email": email,
-        "password": password,
+        "account": account,
+        "secret": secret,
       });
 }
 
@@ -34,14 +34,19 @@ class UserResponseEntity {
 
   factory UserResponseEntity.fromJson(Map<String, dynamic> json) =>
       UserResponseEntity(
-        accessToken: json['accessToken'],
-        displayName: json['displayName'],
-        channels: json['channels'],
+        accessToken: json['access_token'],
+        displayName: json['display_name'],
+        channels: List<String>.from(json['channels'].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "accessToken": this.accessToken,
         "displayName": this.displayName,
-        "channels": this.channels,
+        "channels": List<dynamic>.from(this.channels.map((e) => e)),
       };
+
+  @override
+  String toString() {
+    return 'UserResponseEntity{accessToken: $accessToken, displayName: $displayName, channels: $channels}';
+  }
 }

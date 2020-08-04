@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,10 +51,22 @@ class HttpUtil {
     }, onResponse: (Response response) {
       return response;
     }, onError: (DioError error) {
+      print(error);
       return error;
     }));
 
     dio.interceptors.add(NetCache());
+
+    if (!Global.isRelease && PROXY_ENABLE) {
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        client.findProxy = (uri) {
+          return 'PROXY $PROXY_IP:$PROXY_PORT';
+        };
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+      };
+    }
   }
 
   ErrorEntity createErrorEntity(DioError error) {

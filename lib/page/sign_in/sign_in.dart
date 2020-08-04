@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsflutter/common/api/apis.dart';
 import 'package:newsflutter/common/api/user.dart';
 import 'package:newsflutter/common/entity/entity.dart';
 import 'package:newsflutter/common/utils/utils.dart';
@@ -21,19 +22,19 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   _handleSignIn() async {
-    if (!Validator.isEmail(_emailController.value.text)) {
+    if (Validator.isEmail(_emailController.value.text)) {
       toastInfo(msg: "邮箱格式错误");
       return;
     }
 
-    if (!Validator.checkStringLength(_passwordController.value.text, 6)) {
+    if (Validator.checkStringLength(_passwordController.value.text, 6)) {
       toastInfo(msg: "密码长度不能少于6位");
       return;
     }
 
     UserRequestEntity params = UserRequestEntity(
-      email: _emailController.value.text,
-      password: _passwordController.value.text,
+      account: _emailController.value.text,
+      secret: _passwordController.value.text,
     );
 
     UserResponseEntity response =
@@ -41,8 +42,10 @@ class _SignInPageState extends State<SignInPage> {
     Global.saveProfile(response);
   }
 
-  _handleSignUp() {
-    Navigator.pushNamed(context, "/sign-up");
+  _handleSignUp() async {
+    Navigator.pushNamed(context, "/application");
+//    var data = await NewsAPI.getTags(context: context);
+//    print(data);
   }
 
   Widget _buildLogo() {
@@ -141,12 +144,12 @@ class _SignInPageState extends State<SignInPage> {
             child: Row(
               children: [
                 flatButtonWidget(
-                    onPressed: _handleSignIn,
+                    onPressed: _handleSignUp,
                     bgColor: AppColors.thirdElement,
                     title: "Sign up"),
                 Spacer(),
                 flatButtonWidget(
-                  onPressed: _handleSignUp,
+                  onPressed: _handleSignIn,
                   bgColor: AppColors.primaryElement,
                   title: "Sign in",
                 ),

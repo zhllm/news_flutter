@@ -27,4 +27,16 @@ class StorageUtil {
     String jsonString = _preferences.getString(key);
     return jsonString == null ? null : jsonDecode(jsonString);
   }
+
+  Future<bool> setBool(String key, bool val) {
+    return _preferences.setBool(key, val);
+  }
+
+  bool getBool(String key) {
+    return _preferences.getBool(key);
+  }
+
+  Future<bool> remove(String key) {
+    return _preferences.remove(key);
+  }
 }

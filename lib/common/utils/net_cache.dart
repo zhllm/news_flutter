@@ -39,7 +39,7 @@ class NetCache extends Interceptor {
       }
 
       if (cacheDisk) {
-        // StorageUtil().
+        StorageUtil().remove(options.uri.toString());
       }
       return options;
     }
