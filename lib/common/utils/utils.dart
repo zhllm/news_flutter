@@ -7,3 +7,5 @@ export 'http.dart';
 export 'storage.dart';
 export 'net_cache.dart';
 export 'iconfont.dart';
+export 'date.dart';
+export 'authentication.dart';

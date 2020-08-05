@@ -7,9 +7,10 @@ class NewsAPI {
   static Future<NewsPageListResponseEntity> newsPageList({
     NewsPageListRequestEntity params,
     BuildContext context,
+    cachedDisk = false,
   }) async {
-    var response =
-        await HttpUtil().get('/list', context: context, params: params);
+    var response = await HttpUtil()
+        .get('/list', context: context, params: params, cacheDisk: cachedDisk);
     return NewsPageListResponseEntity.fromJson(response);
   }
 
@@ -17,17 +18,20 @@ class NewsAPI {
   static Future<NewsRecommendResponseEntity> newsRecommend({
     NewsRecommendRequestEntity params,
     BuildContext context,
+    cachedDisk = false,
   }) async {
-    var response =
-        await HttpUtil().get("/recommend", context: context, params: params);
+    var response = await HttpUtil().get("/recommend",
+        context: context, params: params, cacheDisk: cachedDisk);
     return NewsRecommendResponseEntity.fromJson(response);
   }
 
   /// 分类
   static Future<List<CategoryResponseEntity>> getCategories({
     BuildContext context,
+    cachedDisk = false,
   }) async {
-    var response = await HttpUtil().get('/categories', context: context);
+    var response = await HttpUtil()
+        .get('/categories', context: context, cacheDisk: cachedDisk);
     return response
         .map<CategoryResponseEntity>(
             (item) => CategoryResponseEntity.fromJson(item))
@@ -37,8 +41,10 @@ class NewsAPI {
   /// 频道
   static Future<List<ChannelResponseEntity>> getChannel({
     BuildContext context,
+    cachedDisk = true,
   }) async {
-    var response = await HttpUtil().get('/channels', context: context);
+    var response = await HttpUtil()
+        .get('/channels', context: context, cacheDisk: cachedDisk);
     return response
         .map<ChannelResponseEntity>(
             (item) => ChannelResponseEntity.fromJson(item))
@@ -47,9 +53,11 @@ class NewsAPI {
 
   /// 标签
   static Future<List<TagsResponseEntity>> getTags(
-      {BuildContext context, TagRequestEntity params}) async {
-    var response =
-        await HttpUtil().get('/tags', context: context, params: params);
+      {BuildContext context,
+      TagRequestEntity params,
+      cachedDisk = false}) async {
+    var response = await HttpUtil()
+        .get('/tags', context: context, params: params, cacheDisk: cachedDisk);
     var data = response
         .map<TagsResponseEntity>((item) => TagsResponseEntity.fromJson(item))
         .toList();

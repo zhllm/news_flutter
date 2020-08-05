@@ -22,15 +22,15 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   _handleSignIn() async {
-    if (Validator.isEmail(_emailController.value.text)) {
-      toastInfo(msg: "邮箱格式错误");
-      return;
-    }
-
-    if (Validator.checkStringLength(_passwordController.value.text, 6)) {
-      toastInfo(msg: "密码长度不能少于6位");
-      return;
-    }
+//    if (Validator.isEmail(_emailController.value.text)) {
+//      toastInfo(msg: "邮箱格式错误");
+//      return;
+//    }
+//
+//    if (Validator.checkStringLength(_passwordController.value.text, 6)) {
+//      toastInfo(msg: "密码长度不能少于6位");
+//      return;
+//    }
 
     UserRequestEntity params = UserRequestEntity(
       account: _emailController.value.text,
@@ -40,6 +40,7 @@ class _SignInPageState extends State<SignInPage> {
     UserResponseEntity response =
         await UserApi.login(params: params, context: context);
     Global.saveProfile(response);
+    Navigator.pushNamed(context, "/application");
   }
 
   _handleSignUp() async {

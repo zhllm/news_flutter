@@ -82,6 +82,7 @@ class _ApplicationState extends State<Application>
   }
 
   void _handlePageChanged(int page) {
+    print(page);
     setState(() {
       this._page = page;
     });
@@ -141,7 +142,7 @@ class _ApplicationState extends State<Application>
         AccountPage(),
       ],
       controller: _pageController,
-      onPageChanged: _handleNavBarTap,
+      onPageChanged: _handlePageChanged,
     );
   }
 
@@ -150,7 +151,7 @@ class _ApplicationState extends State<Application>
       items: _bottomTabs,
       currentIndex: _page,
       type: BottomNavigationBarType.fixed,
-      onTap: _handlePageChanged,
+      onTap: _handleNavBarTap,
       showSelectedLabels: false,
       showUnselectedLabels: false,
     );

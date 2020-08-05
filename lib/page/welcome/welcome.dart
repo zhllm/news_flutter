@@ -112,8 +112,6 @@ class WelcomeState extends State<Welcome> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        width: 375, height: 812 - 44 - 34, allowFontScaling: true);
     return Scaffold(
         body: Center(
       child: Column(

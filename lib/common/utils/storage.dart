@@ -33,7 +33,8 @@ class StorageUtil {
   }
 
   bool getBool(String key) {
-    return _preferences.getBool(key);
+    var value = _preferences.getBool(key);
+    return value == null ? false : value;
   }
 
   Future<bool> remove(String key) {

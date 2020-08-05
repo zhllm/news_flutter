@@ -7,6 +7,7 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:newsflutter/common/utils/utils.dart';
 import 'package:newsflutter/common/values/values.dart';
+import 'package:newsflutter/common/widgets/toast.dart';
 import 'package:newsflutter/global.dart';
 
 class ErrorEntity implements Exception {
@@ -51,8 +52,18 @@ class HttpUtil {
     }, onResponse: (Response response) {
       return response;
     }, onError: (DioError error) {
-      print(error);
-      return error;
+      ErrorEntity eInfo = createErrorEntity(error);
+      toastInfo(msg: eInfo.message);
+      var context = error.request.extra['context'];
+      if (context != null) {
+        switch (eInfo.code) {
+          case 401:
+            getLoginPage(context);
+            break;
+          default:
+        }
+      }
+      return eInfo;
     }));
 
     dio.interceptors.add(NetCache());
