@@ -1,7 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:newsflutter/common/router/router.gr.dart';
 import 'package:newsflutter/global.dart';
-import 'package:newsflutter/page/index/index.dart';
-import 'package:newsflutter/routes.dart';
 import 'package:provider/provider.dart';
 
 import 'common/provider/provider.dart';
@@ -39,8 +39,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      routes: staticRoutes,
-      home: IndexPage(),
+      builder: ExtendedNavigator<AppRouter>(
+        initialRoute: Routes.indexPage,
+        router: AppRouter(),
+      ),
+//      routes: staticRoutes,
+//      home: IndexPage(),
     );
   }
 }

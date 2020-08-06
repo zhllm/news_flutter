@@ -9,6 +9,7 @@ import 'package:newsflutter/common/utils/screen.dart';
 import 'package:newsflutter/common/utils/utils.dart';
 import 'package:newsflutter/common/values/values.dart';
 import 'package:newsflutter/common/widgets/channel_widget.dart';
+import 'package:newsflutter/common/widgets/widgets.dart';
 import 'package:newsflutter/page/main/ad_widget.dart';
 import 'package:newsflutter/page/main/categories_widget.dart';
 import 'package:newsflutter/page/main/news_item.dart';
@@ -36,13 +37,13 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     _controller = EasyRefreshController();
     _loadAllData();
-    _loadLatestWithDiskCache();
+    // _loadLatestWithDiskCache();
   }
 
   _loadLatestWithDiskCache() {
     if (CACHE_ENABLE == true) {
-      var cachData = StorageUtil().getJSON(STORAGE_INDEX_NEWS_CACHE_KEY);
-      if (cachData != null) {
+      var cacheData = StorageUtil().getJSON(STORAGE_INDEX_NEWS_CACHE_KEY);
+      if (cacheData != null) {
         Timer(Duration(seconds: 3), () {
           _controller.callRefresh();
         });
@@ -53,20 +54,20 @@ class _MainPageState extends State<MainPage> {
   _loadAllData() async {
     _categories = await NewsAPI.getCategories(
       context: context,
-      cachedDisk: true,
+      cachedDisk: false,
     );
     print(_categories);
     _channels = await NewsAPI.getChannel(
       context: context,
-      cachedDisk: true,
+      cachedDisk: false,
     );
     _newsRecommend = await NewsAPI.newsRecommend(
       context: context,
-      cachedDisk: true,
+      cachedDisk: false,
     );
     _newsPageList = await NewsAPI.newsPageList(
       context: context,
-      cachedDisk: true,
+      cachedDisk: false,
     );
     _selectedCode = _categories.first.code;
     print(_categories);
@@ -135,16 +136,26 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          _buildCategories(),
-          _buildRecommend(),
-          _buildChannels(),
-          _buildNewsList(),
-          _buildEmailSubscribe(),
-        ],
-      ),
-    );
+    return _newsPageList == null
+        ? cardListSkeleton()
+        : EasyRefresh(
+            enableControlFinishRefresh: true,
+            controller: _controller,
+            onRefresh: () async {
+              await _loadAllData();
+              _controller.finishRefresh();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildCategories(),
+                  _buildRecommend(),
+                  _buildChannels(),
+                  _buildNewsList(),
+                  _buildEmailSubscribe(),
+                ],
+              ),
+            ),
+          );
   }
 }

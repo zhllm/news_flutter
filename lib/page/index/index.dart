@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:newsflutter/common/widgets/toast.dart';
 import 'package:newsflutter/global.dart';
 import 'package:newsflutter/page/application/application.dart';
 import 'package:newsflutter/page/sign_in/sign_in.dart';
@@ -21,7 +20,6 @@ class _IndexPageState extends State<IndexPage> {
       height: 812 - 44 - 34,
       allowFontScaling: true,
     );
-    toastInfo(msg: '${Global.isOfflineLogin}');
     return Scaffold(
       body: Global.isFirstOpen == true
           ? Welcome()
