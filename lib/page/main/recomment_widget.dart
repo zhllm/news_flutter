@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newsflutter/common/entity/entity.dart';
+import 'package:newsflutter/common/router/router.gr.dart';
 import 'package:newsflutter/common/utils/screen.dart';
 import 'package:newsflutter/common/utils/utils.dart';
 import 'package:newsflutter/common/values/fonts.dart';
@@ -15,10 +17,21 @@ Widget recommendWidget({
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        imageCached(
-          responseEntity.thumbnail,
-          width: setWidth(335),
-          height: setHeight(290),
+        InkWell(
+          child: imageCached(
+            responseEntity.thumbnail,
+            width: setWidth(335),
+            height: setHeight(290),
+          ),
+          onTap: () {
+            ExtendedNavigator.root.pushNamed(
+              Routes.detailPage,
+              arguments: DetailPageArguments(
+                title: responseEntity.title,
+                url: responseEntity.url,
+              ),
+            );
+          },
         ),
         Container(
           margin: EdgeInsets.only(top: setHeight(14)),

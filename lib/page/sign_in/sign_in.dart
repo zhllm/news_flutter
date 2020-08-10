@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:newsflutter/common/api/apis.dart';
 import 'package:newsflutter/common/api/user.dart';
 import 'package:newsflutter/common/entity/entity.dart';
+import 'package:newsflutter/common/router/router.gr.dart';
 import 'package:newsflutter/common/utils/utils.dart';
 import 'package:newsflutter/common/values/colors.dart';
 import 'package:newsflutter/common/values/values.dart';
@@ -40,7 +42,8 @@ class _SignInPageState extends State<SignInPage> {
     UserResponseEntity response =
         await UserApi.login(params: params, context: context);
     Global.saveProfile(response);
-    Navigator.pushNamed(context, "/application");
+    // Navigator.pushNamed(context, "/application");
+    ExtendedNavigator.root.pushNamed(Routes.application);
   }
 
   _handleSignUp() async {

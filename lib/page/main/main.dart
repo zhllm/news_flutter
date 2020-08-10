@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:newsflutter/common/api/apis.dart';
 import 'package:newsflutter/common/entity/entity.dart';
-import 'package:newsflutter/common/utils/screen.dart';
 import 'package:newsflutter/common/utils/utils.dart';
 import 'package:newsflutter/common/values/values.dart';
 import 'package:newsflutter/common/widgets/channel_widget.dart';

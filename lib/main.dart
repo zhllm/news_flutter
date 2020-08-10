@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:newsflutter/common/router/auth_guard.dart';
 import 'package:newsflutter/common/router/router.gr.dart';
 import 'package:newsflutter/global.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       builder: ExtendedNavigator<AppRouter>(
         initialRoute: Routes.indexPage,
         router: AppRouter(),
+        guards: [AuthGuard()],
       ),
 //      routes: staticRoutes,
 //      home: IndexPage(),

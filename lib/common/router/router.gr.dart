@@ -13,6 +13,7 @@ import 'package:newsflutter/page/sign_in/sign_in.dart';
 import 'package:newsflutter/page/sign_up/sign_up.dart';
 import 'package:newsflutter/page/application/application.dart';
 import 'package:newsflutter/page/detail/detail_page.dart';
+import 'package:newsflutter/common/router/auth_guard.dart';
 
 class Routes {
   static const String indexPage = '/';
@@ -40,7 +41,7 @@ class AppRouter extends RouterBase {
     RouteDef(Routes.signInPage, page: SignInPage),
     RouteDef(Routes.signUpPage, page: SignUpPage),
     RouteDef(Routes.application, page: Application),
-    RouteDef(Routes.detailPage, page: DetailPage),
+    RouteDef(Routes.detailPage, page: DetailPage, guards: [AuthGuard]),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -88,6 +89,30 @@ class AppRouter extends RouterBase {
       );
     },
   };
+}
+
+// *************************************************************************
+// Navigation helper methods extension
+// **************************************************************************
+
+extension AppRouterNavigationHelperMethods on ExtendedNavigatorState {
+  Future<dynamic> pushIndexPage() => pushNamed<dynamic>(Routes.indexPage);
+
+  Future<dynamic> pushWelcome() => pushNamed<dynamic>(Routes.welcome);
+
+  Future<dynamic> pushSignInPage() => pushNamed<dynamic>(Routes.signInPage);
+
+  Future<dynamic> pushSignUpPage() => pushNamed<dynamic>(Routes.signUpPage);
+
+  Future<dynamic> pushApplication() => pushNamed<dynamic>(Routes.application);
+
+  Future<dynamic> pushDetailPage(
+          {Key key, String title, String url, OnNavigationRejected onReject}) =>
+      pushNamed<dynamic>(
+        Routes.detailPage,
+        arguments: DetailPageArguments(key: key, title: title, url: url),
+        onReject: onReject,
+      );
 }
 
 // *************************************************************************

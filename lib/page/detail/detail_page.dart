@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:newsflutter/common/values/colors.dart';
+import 'package:newsflutter/common/widgets/tranparent_appbar.dart';
 
 class DetailPage extends StatefulWidget {
   final String title;
@@ -13,6 +16,18 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: transparentAppBar(
+        title: Text(
+          "detail page",
+          style: TextStyle(
+            color: KColor.primaryText,
+          ),
+        ),
+      ),
+      body: Container(
+        child: Text("${widget.title}--${widget.url}"),
+      ),
+    );
   }
 }
