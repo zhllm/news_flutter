@@ -9,7 +9,7 @@ class AuthGuard extends RouteGuard {
     String routeName,
     Object arguments,
   ) async {
-    var isAuth = await isAuthenticated();
+    bool isAuth = await isAuthenticated();
     if (isAuth == false) {
       ExtendedNavigator.root.pushNamed(Routes.signInPage);
     }

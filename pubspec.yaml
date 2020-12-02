@@ -60,8 +60,13 @@ dependencies:
   fluro: ^1.4.0
   flutter_html: ^0.9.6
   sqflite: ^1.1.0
+  webview_flutter: ^0.3.20+2
+
+  loading_animations: ^2.1.0
 
   intl: ^0.16.0
+
+  share: ^0.6.4
 
 dev_dependencies:
   flutter_test:

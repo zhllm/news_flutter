@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:newsflutter/common/router/auth_guard.dart';
@@ -7,7 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'common/provider/provider.dart';
 
-void main() {
+void main() async {
   Global.init().then((value) => runApp(
         MultiProvider(
           providers: [
@@ -32,6 +34,14 @@ void main() {
           ),
         ),
       ));
+  var receivePort = new ReceivePort();
+  await Isolate.spawn(echo, receivePort.sendPort);
+  var sendPort = await receivePort.first;
+}
+
+echo(SendPort sendPort) async {
+  var port = new ReceivePort();
+  sendPort.send(port.sendPort);
 }
 
 class MyApp extends StatelessWidget {

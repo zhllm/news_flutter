@@ -1,1 +1,1 @@
-const SERVER_API_URL = 'http://yapi.demo.qunar.com/mock/88171';
+const SERVER_API_URL = 'http://120.27.69.15:3000/mock/14/news';

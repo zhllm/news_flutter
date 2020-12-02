@@ -33,7 +33,6 @@ class Global {
 
     isFirstOpen = !StorageUtil().getBool(STORAGE_DEVICE_ALREADY_OPEN_KEY);
 
-
     if (isFirstOpen) {
       StorageUtil().setBool(STORAGE_DEVICE_ALREADY_OPEN_KEY, true);
     }
@@ -54,8 +53,8 @@ class Global {
     }
   }
 
-  static Future<bool> saveProfile(UserResponseEntity userResponse) {
+  static Future<bool> saveProfile(UserResponseEntity userResponse) async {
     profile = userResponse;
-    return StorageUtil().setJSON(STORAGE_USER_TOKEN_KEY, userResponse.toJson());
+    return StorageUtil().setJSON(STORAGE_USER_PROFILE_KEY, userResponse.toJson());
   }
 }

@@ -27,8 +27,7 @@ Widget recommendWidget({
             ExtendedNavigator.root.pushNamed(
               Routes.detailPage,
               arguments: DetailPageArguments(
-                title: responseEntity.title,
-                url: responseEntity.url,
+                item: responseEntity,
               ),
             );
           },

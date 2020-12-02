@@ -7,12 +7,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:newsflutter/common/entity/news.dart';
 import 'package:newsflutter/page/index/index.dart';
 import 'package:newsflutter/page/welcome/welcome.dart';
 import 'package:newsflutter/page/sign_in/sign_in.dart';
 import 'package:newsflutter/page/sign_up/sign_up.dart';
 import 'package:newsflutter/page/application/application.dart';
 import 'package:newsflutter/page/detail/detail_page.dart';
+import 'package:newsflutter/common/router/router.dart';
 import 'package:newsflutter/common/router/auth_guard.dart';
 
 class Routes {
@@ -43,6 +45,7 @@ class AppRouter extends RouterBase {
     RouteDef(Routes.application, page: Application),
     RouteDef(Routes.detailPage, page: DetailPage, guards: [AuthGuard]),
   ];
+
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
@@ -79,13 +82,13 @@ class AppRouter extends RouterBase {
     DetailPage: (RouteData data) {
       var args = data.getArgs<DetailPageArguments>(
           orElse: () => DetailPageArguments());
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => DetailPage(
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) => DetailPage(
           key: args.key,
-          title: args.title,
-          url: args.url,
+          item: args.item,
         ),
         settings: data,
+        transitionsBuilder: zoomInTransition,
       );
     },
   };
@@ -107,10 +110,10 @@ extension AppRouterNavigationHelperMethods on ExtendedNavigatorState {
   Future<dynamic> pushApplication() => pushNamed<dynamic>(Routes.application);
 
   Future<dynamic> pushDetailPage(
-          {Key key, String title, String url, OnNavigationRejected onReject}) =>
+          {Key key, NewsRecommendResponseEntity item, OnNavigationRejected onReject}) =>
       pushNamed<dynamic>(
         Routes.detailPage,
-        arguments: DetailPageArguments(key: key, title: title, url: url),
+        arguments: DetailPageArguments(key: key, item: item),
         onReject: onReject,
       );
 }
@@ -122,7 +125,7 @@ extension AppRouterNavigationHelperMethods on ExtendedNavigatorState {
 //DetailPage arguments holder class
 class DetailPageArguments {
   final Key key;
-  final String title;
-  final String url;
-  DetailPageArguments({this.key, this.title, this.url});
+  final NewsRecommendResponseEntity item;
+
+  DetailPageArguments({this.key, this.item});
 }
